@@ -1,0 +1,17 @@
+{
+  "name": "get-events-lambda",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.863.0",
+    "@aws-sdk/util-dynamodb": "^3.863.0"
+  }
+}
