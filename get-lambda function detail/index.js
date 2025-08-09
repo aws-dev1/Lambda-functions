@@ -3,7 +3,7 @@ const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
 const { unmarshall } = require("@aws-sdk/util-dynamodb");
 
 const dynamo = new DynamoDBClient({});
-const TABLE = "Events"; // <-- your table name (hardcoded as requested)
+const TABLE = "Events"; //
 
 function escapeHtml(s = "") {
   return String(s)
@@ -14,7 +14,7 @@ function escapeHtml(s = "") {
     .replaceAll("'", "&#39;");
 }
 
-// Small helper: format a unix-ish ms timestamp into readable date
+
 function formatDate(ts) {
   try {
     const d = new Date(Number(ts));
@@ -157,7 +157,7 @@ function renderClassic(event) {
 }
 
 function renderModern(event) {
-  // Simple alternative template. You can extend it with another style.
+ 
   return `
   <!doctype html>
   <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -194,7 +194,7 @@ function renderModern(event) {
 exports.handler = async (event) => {
   console.log("Lambda#3 incoming event:", JSON.stringify(event));
   try {
-    // support: pathParameters.eventId or queryStringParameters.eventId
+
     const eventId = event?.pathParameters?.eventId || event?.queryStringParameters?.eventId;
     if (!eventId) {
       return {
@@ -204,7 +204,7 @@ exports.handler = async (event) => {
       };
     }
 
-    // Get item from DynamoDB
+
     const resp = await dynamo.send(new GetItemCommand({
       TableName: TABLE,
       Key: { eventId: { S: eventId } }
@@ -220,7 +220,7 @@ exports.handler = async (event) => {
 
     const item = unmarshall(resp.Item);
 
-    // Decide which template to render
+
     const template = (item.template || "classic").toLowerCase();
     let html = "";
     if (template === "modern") {
@@ -248,3 +248,4 @@ exports.handler = async (event) => {
     };
   }
 };
+
