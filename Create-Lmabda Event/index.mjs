@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from "uuid";
 
 const s3 = new S3Client({});
 const dynamo = new DynamoDBClient({});
-const BUCKET = "event-assets-store"; // ✅ Replace with your actual bucket name
-const TABLE = "Events"; // ✅ Replace if your DynamoDB table name is different
+const BUCKET = "event-assets-store"; 
+const TABLE = "Events"; 
 
 export const handler = async (event) => {
   console.log("Received event:", JSON.stringify(event));
 
   try {
-    // ✅ Robust body parsing for both API Gateway and Lambda console
+    
     let rawBody = event.body;
     if (!rawBody && event.title) {
       rawBody = JSON.stringify(event);
@@ -23,11 +23,11 @@ export const handler = async (event) => {
 
     console.log("Parsed body. Generating event:", eventId);
 
-    // ✅ Upload banner
+    
     const bannerUrl = await uploadImage(body.bannerBase64, `banners/${eventId}.jpg`);
     console.log("Banner uploaded:", bannerUrl);
 
-    // ✅ Upload speaker photos
+    
     const speakers = await Promise.all((body.speakers || []).map(async (s, i) => {
       const photo = await uploadImage(s.photoBase64, `speakers/${eventId}_${i}.jpg`);
       return {
@@ -39,7 +39,7 @@ export const handler = async (event) => {
       };
     }));
 
-    // ✅ Upload partner logos
+    
     const partners = await Promise.all((body.partners || []).map(async (p, i) => {
       const logo = await uploadImage(p.logoBase64, `partners/${eventId}_${i}.jpg`);
       return {
@@ -50,7 +50,7 @@ export const handler = async (event) => {
       };
     }));
 
-    // ✅ Prepare DynamoDB item
+    
     const item = {
       eventId: { S: eventId },
       createdAt: { N: createdAt.toString() },
@@ -117,7 +117,7 @@ export const handler = async (event) => {
   }
 };
 
-// ✅ Upload image to S3 (without ACL)
+
 async function uploadImage(base64Data, key) {
   const base64Body = base64Data.replace(/^data:image\/\w+;base64,/, "");
   const buffer = Buffer.from(base64Body, "base64");
