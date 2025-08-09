@@ -1,0 +1,10 @@
+{
+  "name": "render-event-lambda",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.863.0",
+    "@aws-sdk/util-dynamodb": "^3.863.0"
+  }
+}
